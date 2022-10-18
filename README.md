@@ -19,12 +19,12 @@ Collector
 >     + https://bazaar.abuse.ch/api/#query_hash
 >
 > 3. URLhaus
-> + File Hash(sha1, sha256, md5) -> https://urlhaus-api.abuse.ch/v1/payload/ (form-data->md5_hash:md5 / sha256_hash:sha256)
->     + https://developers.virustotal.com/reference/file-info
+> + File Hash(sha256, md5) -> https://urlhaus-api.abuse.ch/v1/payload/ (form-data->md5_hash:md5 / sha256_hash:sha256)
+>     + https://urlhaus-api.abuse.ch/#payloadinfo
 > + URL ->https://urlhaus-api.abuse.ch/v1/url/ (form-data -> url:url)
 >     + https://urlhaus-api.abuse.ch/#urlinfo
-> + Domain/IPs -> https://urlhaus-api.abuse.ch/v1/host/ (form-data -> url:Domain/IPs)
->     + https://developers.virustotal.com/reference/domain-info
+> + Domain/IPs -> https://urlhaus-api.abuse.ch/v1/host/ (form-data -> host:Domain/IPs)
+>     + https://urlhaus-api.abuse.ch/#hostinfo
 
 > 4. OTX
 > + https://otx.alienvault.com/assets/static/external_api.html#Home
