@@ -1,15 +1,13 @@
-import os
-import pandas as pd
 import logging
 import traceback
-dir = "IOCS"
+import pandas as pd
 
-def open_file(file):
+def get_data_from_file(file):
     logger = logging.getLogger()
     try:
-        with pd.read_csv(os.path.join(dir,file) , sep=',',header=0, encoding='utf-8') as df:
-            parse_data = df.groupby("분류")['IOC'].apply(list).to_dict()
-            return parse_data
+        with pd.read_csv(file  , sep=',',header=0, encoding='utf-8') as df:
+            parsed_data = df.groupby("분류")['IOC'].apply(list).to_dict()
+            return parsed_data
         
     except Exception as e:
         logger.error(e)
@@ -17,4 +15,4 @@ def open_file(file):
     
     
 if __name__=="__main__":
-    open_file("FamousSparrow-ioc.csv")
+    get_data_from_file("FamousSparrow-ioc.csv")
