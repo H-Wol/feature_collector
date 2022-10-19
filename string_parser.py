@@ -9,11 +9,11 @@ def is_file(str):
 def check_str(str):
     return_dict = dict()
     if regexes.sha256_regex.fullmatch(str):
-        return {"SHA256": [str]}
+        return {"SHA-256": [str]}
     if regexes.md5_regex.fullmatch(str):
         return {"MD5": [str]}
     if regexes.sha1_regex.fullmatch(str):
-        return {"SHA1": [str]}
+        return {"SHA-1": [str]}
     if regexes.URL_regex.fullmatch(str):
         return {"URLs": [str]}
     if regexes.ipv4_regex.fullmatch(str):
