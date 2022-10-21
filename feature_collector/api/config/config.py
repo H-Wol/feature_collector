@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class ConfigMgr:
-    
+
     _instance = None
 
     def __init__(self):
@@ -20,7 +20,7 @@ class ConfigMgr:
         if not cls._instance:
             cls._instance = ConfigMgr()
         return cls._instance
-    
+
     def open_config(self):
         try:
             self.config = configparser.ConfigParser()
@@ -44,13 +44,13 @@ class ConfigMgr:
 
     def get_tried_cnt(self):
         try:
-            now_tried_cnt  = int(self.config["VT_VALUE"]["tried"])
+            now_tried_cnt = int(self.config["VT_VALUE"]["tried"])
             config_date = self.config["VT_VALUE"]["config_date"]
             today = datetime.utcnow().strftime('%Y-%m-%d')
             if config_date != today:
-                self.config["VT_VALUE"]["tried"] = str(0)
+                self.config["VT_VALUE"]["tried"] = str(1)
                 self.config["VT_VALUE"]["config_date"] = today
-                return 0
+                return 1
             now_tried_cnt = now_tried_cnt + 1
             self.config["VT_VALUE"]["tried"] = str(now_tried_cnt)
             with open(self.config_file, 'w', encoding='utf-8') as configfile:
