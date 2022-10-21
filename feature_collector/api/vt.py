@@ -17,6 +17,7 @@ class VTApi(API):
         self.config = ConfigMgr().get_instance()
         self.headers["x-apikey"] = self.config.get_config2("KEY", "vt_api_key")
         self.delay_rate = int(self.config.get_config2("VT_VALUE", "rate"))
+        self.started = False
 
     def thread_run(self, datas: dict, group_name: str):
         th = Thread(target=self.get_info, args=(datas, group_name))
@@ -56,6 +57,7 @@ class VTApi(API):
                 json_data = dict()
                 json_data["failure"] = err_msg
                 return json_data
+            self.delay()
             return False
         except:
             self.logger.error(traceback.format_exc())
@@ -63,7 +65,6 @@ class VTApi(API):
     def get_hash_info(self, str):
         json_data = dict()
         try:
-            self.logger.info("Start get Data")
             check = self.check_max_vt_reqeust_times()
             if check:
                 json_data = check
@@ -79,12 +80,10 @@ class VTApi(API):
             return
         finally:
             self.save_file(json_data, str)
-            time.sleep(self.delay_rate)
 
     def get_url_info(self, str):
         json_data = dict()
         try:
-            self.logger.info("Start get Data")
             check = self.check_max_vt_reqeust_times()
             if check:
                 json_data = check
@@ -101,12 +100,10 @@ class VTApi(API):
             return
         finally:
             self.save_file(json_data, converted_url)
-            time.sleep(self.delay_rate)
 
     def get_ip_info(self, str):
         json_data = dict()
         try:
-            self.logger.info("Start get Data")
             check = self.check_max_vt_reqeust_times()
             if check:
                 json_data = check
@@ -122,12 +119,10 @@ class VTApi(API):
             return
         finally:
             self.save_file(json_data, str)
-            time.sleep(self.delay_rate)
 
     def get_domain_info(self, str):
         json_data = dict()
         try:
-            self.logger.info("Start get Data")
             check = self.check_max_vt_reqeust_times()
             if check:
                 json_data = check
@@ -143,8 +138,13 @@ class VTApi(API):
             return
         finally:
             self.save_file(json_data, str)
-            time.sleep(self.delay_rate)
 
     def save_file(self, data, filename):
         with open(os.path.join(self.save_dir, '{}_{}.json'.format(filename, "VirusTotal")), 'w') as fp:
             json.dump(data, fp)
+
+    def delay(self):
+        if self.started:
+            time.sleep(self.delay_rate)
+        else:
+            self.started = True
