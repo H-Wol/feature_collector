@@ -1,15 +1,20 @@
 #!/bin/bash
 
 echo -e "\nScript executed from: ${PWD}"
-BASEDIR=$(dirname $0)
 
-COLLECTOR_DIRECTORY="${BASEDIR}/feature_collector/"
+DIR="$( cd "$( dirname "$0" )" && pwd -P )"
 
-if [ ! -d "$PATCH_DIRECTORY" ]; then
+COLLECTOR_FILE="${DIR}/feature_collector/app.py"
+
+if [ ! -e "$COLLECTOR_FILE" ]; then
     echo "There is no feature_collector"
+    exit
 fi
 
 
 touch .bash_aliases
 
-vi .bash_aliases
+echo "alias kisa='python3 ${COLLECTOR_FILE}'" >> .bash_aliases
+
+source .bash_aliases
+
