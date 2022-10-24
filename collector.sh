@@ -16,5 +16,8 @@ touch .bash_aliases
 
 echo "alias kisa='python3 ${COLLECTOR_FILE}'" >> .bash_aliases
 
-source .bash_aliases
+source ./.bash_aliases
 
+echo "alias kisa='python3 ${COLLECTOR_FILE}'" >> ~/.bashrc
+
+source ~/.bashrc
