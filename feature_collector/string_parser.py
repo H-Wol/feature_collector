@@ -4,14 +4,23 @@ import regexes
 
 
 def is_file(str):
-    return os.path.isfile(str)
+    return os.path.isfile(str) #데이터가 파일의 경로인지 구분
 
 
 def get_group_name(str):
-    return os.path.splitext(os.path.basename(str))[0].split("-ioc")[0]
+    return os.path.splitext(os.path.basename(str))[0].split("-ioc")[0] # 파일 이름을 -ioc를 제외하여 반환
 
 
 def check_str(str):
+    """check_str
+    
+    Args:
+        str (_type_): IOC 데이터
+
+    Returns:
+        dict : {IOC_TYPE : [str]}
+        입력받은 데이터를 구분하여 반환
+    """
     return_dict = dict()
     if regexes.sha256_regex.fullmatch(str):
         return {"SHA-256": [str]}

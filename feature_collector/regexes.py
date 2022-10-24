@@ -21,11 +21,18 @@ class _regex:
         self.URL_regex = re.compile(
             "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$")
 
+    
+        """
+         객체 재 할당 불가
+        """
     def __setattr__(self, name, value):
         if name in self.__dict__:
             raise Exception('Cannot assign value to variable.')
         self.__dict__[name] = value
 
+        """
+         객체 삭제 불가
+        """
     def __delattr__(self, name):
         if name in self.__dict__:
             raise Exception('Unable to delete variable.')

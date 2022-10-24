@@ -13,7 +13,7 @@ class Thread:
 
     def __call__(self, type: str, url: str, header: dict, data: dict, save_dir: str):
         try:
-            self.header.update(header)
+            self.header.update(header) # 헤더 추가 정보가 있을 경우 추가되고 기존 데이터는 덮어 씌워짐
             return_dict = dict()
             if type == "POST":
                 return_dict = self.post(url, header, data)
@@ -32,7 +32,7 @@ class Thread:
             # self.logger.error(e)
             self.logger.error(url)
             self.logger.error(traceback.format_exc())
-            json_data["failure"] = str(e)
+            json_data["failure"] = str(e) # API 요청이 실패할 경우 에러 메시지로 데이터 생성
         finally:
             return json_data
 
@@ -45,7 +45,7 @@ class Thread:
         except Exception as e:
             # self.logger.error(e)
             self.logger.error(traceback.format_exc())
-            json_data["failure"] = str(e)
+            json_data["failure"] = str(e) # API 요청이 실패할 경우 에러 메시지로 데이터 생성
         finally:
             return json_data
 

@@ -16,7 +16,7 @@ class OTX(API):
         self.save_dir = os.path.join(self.save_dir, group_name)
         self.header = {
             'X-OTX-API-KEY': key,
-        }
+        } # API KEY 설정
         os.makedirs(self.save_dir, exist_ok=True)
 
         hashs = ["MD5", "SHA-256", "SHA-1"]
@@ -38,6 +38,9 @@ class OTX(API):
         return task_info
 
     def get_hash_info(self, str):
+        """
+        파일 Hash 정보 관련 API
+        """
         task_infos = list()
         sections = ["general", "analysis"]
         for section in sections:
@@ -50,6 +53,9 @@ class OTX(API):
         return task_infos
 
     def get_url_info(self, str: str):
+        """
+        URL 관련 API
+        """
         task_infos = list()
         sections = ["general", "url_list"]
         for section in sections:
@@ -58,11 +64,14 @@ class OTX(API):
             task_info["type"] = "GET"
             task_info["url"] = self.url + "url/{}/{}".format(str, section)
             converted_url = super().get_converted_url(str)
-            task_info["save_dir"] = self.get_save_dir(converted_url, section)
+            task_info["save_dir"] = self.get_save_dir(converted_url, section) #URL 데이터의 / 와 \ 를 _로 치환
             task_infos.append(task_info)
         return task_infos
 
     def get_domain_info(self, str: str):
+        """
+        도메인 관련 API
+        """
         task_infos = list()
         sections = ["general", "geo", "malware", "url_list",
                     "passive_dns", "whois", "http_scans"]
@@ -76,6 +85,9 @@ class OTX(API):
         return task_infos
 
     def get_ip_info(self, str: str):
+        """
+        IP 관련 API
+        """
         task_infos = list()
         # IPv4
         sections = ["general", "reputation", "geo", "malware",

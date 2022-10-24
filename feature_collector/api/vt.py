@@ -16,11 +16,11 @@ class VTApi(API):
         self.headers = {"accept": "application/json"}
         self.config = ConfigMgr().get_instance()
         self.headers["x-apikey"] = self.config.get_config2("KEY", "vt_api_key")
-        self.delay_rate = int(self.config.get_config2("VT_VALUE", "rate"))
-        self.started = False
+        self.delay_rate = int(self.config.get_config2("VT_VALUE", "rate")) # 각 요청마다 딜레이 설정
+        self.started = False # 요청간 딜레이를 처음 실행에는 실행하지 않기 위한 변수
 
     def thread_run(self, datas: dict, group_name: str):
-        th = Thread(target=self.get_info, args=(datas, group_name))
+        th = Thread(target=self.get_info, args=(datas, group_name)) # Thread를 생성하여 백그라운드로 실행
         # th.daemon = True
         th.start()
 
@@ -51,7 +51,7 @@ class VTApi(API):
     def check_max_vt_reqeust_times(self):
         try:
             tried_time = self.config.get_tried_cnt()
-            if tried_time >= int(self.config.get_config2("VT_VALUE", "max_try")):
+            if tried_time >= int(self.config.get_config2("VT_VALUE", "max_try")): # 일일 최대 요청 건수가 기준을 넘었을 경우
                 err_msg = "The number of requests has been exceeded."
                 self.logger.error(err_msg)
                 json_data = dict()
@@ -63,6 +63,9 @@ class VTApi(API):
             self.logger.error(traceback.format_exc())
 
     def get_hash_info(self, str):
+        """
+        파일 Hash 정보 관련 API
+        """
         json_data = dict()
         try:
             check = self.check_max_vt_reqeust_times()
@@ -82,6 +85,9 @@ class VTApi(API):
             self.save_file(json_data, str)
 
     def get_url_info(self, str):
+        """
+        URL 관련 API
+        """
         json_data = dict()
         try:
             check = self.check_max_vt_reqeust_times()
@@ -92,7 +98,7 @@ class VTApi(API):
             response = requests.get(
                 request_url, headers=self.headers, timeout=15)
             json_data = response.json()
-            converted_url = super().get_converted_url(str)
+            converted_url = super().get_converted_url(str) #URL 데이터의 / 와 \ 를 _로 치환
             return
         except Exception as e:
             self.logger.error(e)
@@ -102,6 +108,9 @@ class VTApi(API):
             self.save_file(json_data, converted_url)
 
     def get_ip_info(self, str):
+        """
+        IP 관련 API
+        """
         json_data = dict()
         try:
             check = self.check_max_vt_reqeust_times()
@@ -121,6 +130,9 @@ class VTApi(API):
             self.save_file(json_data, str)
 
     def get_domain_info(self, str):
+        """
+        Domain 관련 API
+        """
         json_data = dict()
         try:
             check = self.check_max_vt_reqeust_times()
@@ -144,7 +156,7 @@ class VTApi(API):
             json.dump(data, fp)
 
     def delay(self):
-        if self.started:
-            time.sleep(self.delay_rate)
+        if self.started: #처음 실행된 경우가 아닌 경우
+            time.sleep(self.delay_rate) #설정된 시간만큼 딜레이
         else:
-            self.started = True
+            self.started = True 

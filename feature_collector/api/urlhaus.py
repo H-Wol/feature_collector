@@ -15,7 +15,7 @@ class URLHaus(API):
         self.save_dir = os.path.join(self.save_dir, group_name)
         os.makedirs(self.save_dir, exist_ok=True)
 
-        hashs = ["MD5", "SHA-256"]
+        hashs = ["MD5", "SHA-256"] # URLhaus는 SHA-1을 지원하지 않음
         hosts = ["IPs", "Domains"]
         for key in keys:
             if key == "SHA-1":
@@ -32,6 +32,9 @@ class URLHaus(API):
         return task_info
 
     def get_hash_info(self, str, type):
+        """
+        파일 Hash 정보 관련 API
+        """
         task_info = super().get_default_dict()
         task_info["type"] = "POST"
         task_info["url"] = self.url + "payload/"
@@ -43,15 +46,21 @@ class URLHaus(API):
         return task_info
 
     def get_url_info(self, str: str):
+        """
+        URL 관련 API
+        """
         task_info = super().get_default_dict()
         task_info["type"] = "POST"
         task_info["url"] = self.url + "url/"
         converted_url = super().get_converted_url(str)
-        task_info["save_dir"] = self.get_save_dir(converted_url)
+        task_info["save_dir"] = self.get_save_dir(converted_url) #URL 데이터의 / 와 \ 를 _로 치환
         task_info["data"] = {"url": str}
         return task_info
 
     def get_domain_or_ip_info(self, str):
+        """
+        도메인 및 IP 관련 API
+        """
         task_info = super().get_default_dict()
         task_info["type"] = "POST"
         task_info["url"] = self.url + "host/"
