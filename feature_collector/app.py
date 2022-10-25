@@ -53,7 +53,7 @@ class App:
                 "save_dir": "", 저장 경로
             }] 형식
             """
-            # self.thread_manager(result) #Thread Pool에 위 데이터 전달하여 작업 진행
+            self.thread_manager(result) #Thread Pool에 위 데이터 전달하여 작업 진행
         except Exception as e:
             self.logger.error(str(e))
 
