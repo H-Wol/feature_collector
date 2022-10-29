@@ -56,29 +56,39 @@
 >     - url_list: URLs analyzed by AlienVault Labs which point to or are somehow associated with this IP address.
 >     - passive_dns: passive dns information about hostnames/domains observed by AlienVault Labs pointing to this IP address.
 >     - http_scans: Meta data for http(s) connections to the IP.
-> - IPs(v6) -> https://otx.alienvault.com/api/v1/indicators/IPv6/{ip}/{section}
->   - section
->     - general: General information about the IP, such as geo data, and a list of the other sections currently available for this IP address.
->     - reputation: OTX data on malicious activity observed by AlienVault Labs (IP Reputation).
->     - geo: A more verbose listing of geographic data (Country code, coordinates, etc.)
->     - malware: Malware samples analyzed by AlienVault Labs which have been observed connecting to this IP address.
->     - url_list: URLs analyzed by AlienVault Labs which point to or are somehow associated with this IP address.
->     - passive_dns: passive dns information about hostnames/domains observed by AlienVault Labs pointing to this IP address.
+
+## 초기 설정
+
+> 1.
 
 ## 사용 방법
 
-> 1. python {ioc/file} {공격 그룹 명(option)}
+> 1. python {ioc/file} -gn {공격 그룹 명(option)}
 >    > 단일 ioc의 경우 입력한 공격 그룹명이 없을 경우 공격 그룹명이 etc로 저장
 >    >
 >    > 파일의 경우 파일명으로 공격 그룹명이 지정됨
 
-> 2. 해당 요청은 KISA/{공격 그룹명}/{ioc*요청API*세부API}.json로 저장
+> 2. 해당 요청은 실행 경로의 KISA/{공격 그룹명}/{ioc*요청API*세부API}.json로 저장
 >    > 단일 ioc의 경우 공격 그룹명이 없을 경우 etc 폴더로 저장
 >    >
 >    > 동일 공격 그룹의 동일 ioc의 경우 덮어씌워짐
 >    >
 >    > 요청 실패의 경우 빈 파일로 저장
 >    >
->    > VirusTotal의 경우 하루 500건 이상은 요청되지 않음
+>    > VirusTotal의 경우 하루 500건 이상은 요청되지 않음 (시도한 당일 요청 횟수는 feature_collector/feature_collector/api/config/config.ini 에 표기)
 
 ## 쉘 사용방법
+
+> 1. KISA {ioc/file} -gn {공격 그룹 명(option)}
+>    > 단일 ioc의 경우 입력한 공격 그룹명이 없을 경우 공격 그룹명이 etc로 저장
+>    >
+>    > 파일의 경우 파일명으로 공격 그룹명이 지정됨
+
+> 2. 해당 요청은 요청경로의 KISA/{공격 그룹명}/{ioc*요청API*세부API}.json로 저장
+>    > 단일 ioc의 경우 공격 그룹명이 없을 경우 etc 폴더로 저장
+>    >
+>    > 동일 공격 그룹의 동일 ioc의 경우 덮어씌워짐
+>    >
+>    > 요청 실패의 경우 빈 파일로 저장
+>    >
+>    > VirusTotal의 경우 하루 500건 이상은 요청되지 않음 (시도한 당일 요청 횟수는 feature_collector/feature_collector/api/config/config.ini 에 표기)
