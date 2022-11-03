@@ -62,7 +62,7 @@ class VTApi(API):
         except:
             self.logger.error(traceback.format_exc())
 
-    def get_hash_info(self, str):
+    def get_hash_info(self, string):
         """
         파일 Hash 정보 관련 API
         """
@@ -72,7 +72,7 @@ class VTApi(API):
             if check:
                 json_data = check
                 return
-            request_url = self.url + "files/" + str
+            request_url = self.url + "files/" + string
             response = requests.get(
                 request_url, headers=self.headers, timeout=15)
             json_data = response.json()
@@ -82,9 +82,9 @@ class VTApi(API):
             json_data["failure"] = str(e)
             return
         finally:
-            self.save_file(json_data, str)
+            self.save_file(json_data, string)
 
-    def get_url_info(self, str):
+    def get_url_info(self, string):
         """
         URL 관련 API
         """
@@ -94,11 +94,11 @@ class VTApi(API):
             if check:
                 json_data = check
                 return
-            request_url = self.url + "urls/" + str
+            request_url = self.url + "urls/" + string
+            converted_url = super().get_converted_url(string) #URL 데이터의 / 와 \ 를 _로 치환
             response = requests.get(
                 request_url, headers=self.headers, timeout=15)
             json_data = response.json()
-            converted_url = super().get_converted_url(str) #URL 데이터의 / 와 \ 를 _로 치환
             return
         except Exception as e:
             self.logger.error(e)
@@ -107,7 +107,7 @@ class VTApi(API):
         finally:
             self.save_file(json_data, converted_url)
 
-    def get_ip_info(self, str):
+    def get_ip_info(self, string):
         """
         IP 관련 API
         """
@@ -117,7 +117,7 @@ class VTApi(API):
             if check:
                 json_data = check
                 return
-            request_url = self.url + "ip_addresses/" + str
+            request_url = self.url + "ip_addresses/" + string
             response = requests.get(
                 request_url, headers=self.headers, timeout=15)
             json_data = response.json()
@@ -127,9 +127,9 @@ class VTApi(API):
             json_data["failure"] = str(e)
             return
         finally:
-            self.save_file(json_data, str)
+            self.save_file(json_data, string)
 
-    def get_domain_info(self, str):
+    def get_domain_info(self, string):
         """
         Domain 관련 API
         """
@@ -139,7 +139,7 @@ class VTApi(API):
             if check:
                 json_data = check
                 return
-            request_url = self.url + "domains/" + str
+            request_url = self.url + "domains/" + string
             response = requests.get(
                 request_url, headers=self.headers, timeout=15)
             json_data = response.json()
@@ -149,7 +149,7 @@ class VTApi(API):
             json_data["failure"] = str(e)
             return
         finally:
-            self.save_file(json_data, str)
+            self.save_file(json_data, string)
 
     def save_file(self, data, filename):
         with open(os.path.join(self.save_dir, '{}_{}.json'.format(filename, "VirusTotal")), 'w') as fp:
