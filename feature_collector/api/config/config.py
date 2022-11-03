@@ -48,7 +48,6 @@ class ConfigMgr:
         """
         try:
             now_tried_cnt = int(self.config["VT_VALUE"]["tried"]) # 요청한 횟수
-            print(now_tried_cnt)
             config_date = self.config["VT_VALUE"]["config_date"] # 기준 날짜
             today = datetime.utcnow().strftime('%Y-%m-%d')
             if config_date != today: # 금일이 기준날짜와 다를경우
